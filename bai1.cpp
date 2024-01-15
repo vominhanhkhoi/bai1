@@ -122,16 +122,27 @@ struct Circle
 
 };
 
+
+double cross(Point a, Point b, Point c)
+{
+	double x1 = b.x - a.x;
+	double y1 = b.y - a.y;
+
+	double x2 = c.x - a.x;
+	double y2 = c.y - a.y;
+
+	return (x1 * y2 - y1 * x2);
+}
+
 struct Convexpoly
 {
 	int n;
-	Point* ptr = NULL;
+	Point* ptr;
 	
-
 	Convexpoly()
 	{
 		cout << "nhap so diem cua convexpoly = "; cin >> n;
-		
+		ptr = NULL;
 		ptr = new(nothrow) Point[n];
 
 		if (!ptr) {
@@ -148,18 +159,45 @@ struct Convexpoly
 			}
 		}
 	}
-	
+
 
 	~Convexpoly()
 	{
 		delete ptr;
 	}
+
+	bool IsConvex()
+	{
+		double trc = 0, sau = 0;
+
+		for (int i = 0; i < n; i++)
+		{
+			Point d1, d2, d3;
+
+			d1.x = ptr[i].x;
+			d1.y = ptr[i].y;
+
+			d2.x = ptr[(i + 1) % n].x;
+			d2.y = ptr[(i + 1) % n].y;
+
+			d3.x = ptr[(i + 2) % n].x;
+			d3.y = ptr[(i + 2) % n].y;
+
+			sau = cross(d1, d2, d3);
+			if (sau != 0)
+			{
+				if (trc * sau < 0) return 0;
+				else trc = sau;
+			}
+		}
+		return 1;
+	}
+
 };
 
-bool IsConvex(Point* a,int n)
-{
 
-}
+
+
 
 
 int main()
@@ -179,9 +217,23 @@ int main()
 
 	if (x == 8) 
 	{
-		Convexpoly convexpoly;
-		cout << IsConvex(convexpoly.ptr, convexpoly.n);
-		
+		bool kt = 1;
+
+		while (kt)
+		{
+			Convexpoly convexpoly;
+
+			if (convexpoly.IsConvex()) 
+			{
+				cout << "day la da giac loi\n";
+				kt = 0;
+			}
+			else 
+			{
+				cout << "day la da giac lom, moi nhap lai\n";
+			}
+		}
+
 	}
 	else if(x>0 && x<8)
 	{
