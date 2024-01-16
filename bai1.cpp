@@ -22,7 +22,8 @@ struct Point
 struct Segment
 {
 	Point A, B;
-	void input()
+
+	Segment()  //contructor nhap tu console
 	{
 		cout << "nhap toa do diem A:\n";
 		cout << "nhap x= "; cin >> A.x;
@@ -31,6 +32,20 @@ struct Segment
 		cout << "nhap toa do diem B:\n";
 		cout << "nhap x= "; cin >> B.x;
 		cout << "nhap y= "; cin >> B.y;
+	}
+
+	Segment(Point a,Point b) //contructor lay 2 diem
+	{
+		A = a;
+		B = b;
+	}
+
+
+	double dodai()
+	{
+		double t = 0;
+		t = sqrt(pow(B.x - A.x, 2) + pow(B.y - A.x, 2));
+		return t;
 	}
 };
 
@@ -83,6 +98,16 @@ struct Triangle
 		cout << "nhap toa do diem C:\n";
 		cout << "nhap x= "; cin >> C.x;
 		cout << "nhap y= "; cin >> C.y;
+	}
+
+	bool IsTriangle(Point a,Point b,Point c)
+	{
+		Segment ab(a,b), bc(b,c), ca(c,a);
+	
+		if (ab.dodai() + bc.dodai() <= ca.dodai() || ab.dodai() + ca.dodai() <= bc.dodai() || bc.dodai() + ca.dodai() <= ab.dodai())
+			return false;
+		else
+			return true;
 	}
 };
 
@@ -221,17 +246,21 @@ int main()
 
 		while (kt)
 		{
-			Convexpoly convexpoly;
+			Convexpoly convexpoly; // local var khong dung o ngoai vong while duoc
 
 			if (convexpoly.IsConvex()) 
 			{
 				cout << "day la da giac loi\n";
 				kt = 0;
+
+
+
 			}
 			else 
 			{
 				cout << "day la da giac lom, moi nhap lai\n";
 			}
+			
 		}
 
 	}
@@ -247,8 +276,8 @@ int main()
 			};
 			case 2:
 			{
-				Segment segment; 
-				segment.input();
+				Segment segment; //da co constructor khong can funtion input
+				
 				break;
 			};
 			case 3:
@@ -267,6 +296,15 @@ int main()
 			{
 				Triangle triangle; 
 				triangle.input(); 
+				if (triangle.IsTriangle(triangle.A, triangle.B, triangle.C))
+				{
+					cout << "tam giac hop le";
+				}
+				else
+				{
+					cout << "tam giac khong hop le";
+				}
+
 				break;
 			};
 			case 6:
