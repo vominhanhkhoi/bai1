@@ -148,7 +148,7 @@ struct Circle
 };
 
 
-double cross(Point a, Point b, Point c)
+double cross(Point a, Point b, Point c)  //co the dung segment.dodai() de tinh x,y;
 {
 	double x1 = b.x - a.x;
 	double y1 = b.y - a.y;
