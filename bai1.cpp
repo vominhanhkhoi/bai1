@@ -51,19 +51,24 @@ struct Segment
 
 struct Line
 {
-	double a, b, c;
-	Point M;
-	void input()
-	{
-		cout << "nhap phuong trinh duong thang:\n";
-		cout << "nhap a= "; cin >> a;
-		cout << "nhap b= "; cin >> b;
-		cout << "nhap c= "; cin >> c;
-		cout << "nhap M(x) = "; cin >> M.x;
-		cout << "nhap M(y) = "; cin >> M.y;
+	double a, b;
 
-	}
+
 };
+
+Line buildline(Point A, Point B)
+{
+	Line n;
+	n.a = (A.y - B.y) / (A.x - B.x);
+	n.b = (A.y - n.a * (A.x));
+	return n;
+}
+
+double pline(Point p, Line l)
+{
+	return (l.a * p.x - p.y + l.b);
+}
+
 
 struct Vector
 {
@@ -282,8 +287,36 @@ int main()
 			};
 			case 3:
 			{
-				Line line; 
-				line.input(); 
+				Point A, B;
+				cout << "nhap cac diem cua duong thang:\n";
+				cout << "nhap diem A =\n";
+				cout << "nhap x="; cin >> A.x;
+				cout << "nhap y="; cin >> A.y;
+				cout << "nhap diem B =\n";
+				cout << "nhap x="; cin >> B.x;
+				cout << "nhap y="; cin >> B.y;
+				Line line = buildline(A, B);
+
+				Point p;
+				cout << "nhap diem M cua duong thang:\n";
+				cout << "nhap x="; cin >> p.x;
+				cout << "nhap y="; cin >> p.y;
+
+				double kt = pline(p, line);
+
+				if (kt == 0)
+				{
+					cout << "diem M nam tren dt\n";
+				}
+				else if (kt > 0)
+				{
+					cout << "diem M nam ben phai dt\n";
+				}
+				else if (kt < 0)
+				{
+					cout << "diem nam ban trai dt\n";
+				}
+
 				break;
 			};
 			case 4:
